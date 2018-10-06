@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Portfolio | Blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script>
+
+    function showHide(block1, block2) {
+        var x = document.getElementById(block1);
+        var y = document.getElementById(block2);
+
+        if (x.style.display == "" || x.style.display == "block") {
+            x.style.display = "none";
+            y.style.display = "block";
+        } else {
+            x.style.display = "block";
+            y.style.display = "none";
+
+        }
+
+    }
+
+</script>    <!-- Custom styles for this template -->
+    <style>
+        h3 {}
+
+    .blog-entry {
+        margin-bottom: 25px;
+        padding: 0;
+    }
+
+    .blog-entry h5 {
+        color: #336699;
+    }
+
+    .blog-entry p {
+        color: #999;
+        font-size: 0.9em;
+        margin-top: 0;
+        padding: 0;
+
+    }
+
+    .blog-entry .pubdate {
+        border-top: thin solid #000;
+        border-bottom: thin solid #000;
+        color: #000;
+        background-color: #f2f2f2;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-family: monospace;
+        font-size: 1em;
+    }
+
+    .blog-body-excerpt {
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+
+    .blog-body-full {
+        display: none;
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+
+</head>
+
+<body>
+    <header class="fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'home' %}">Craig Satchell</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link" href="#">Twitter</a>
+                    <a class="nav-item nav-link" href="{% static 'resume.pdf' %}" target='_blank'>Resume</a>
+                    <a class="nav-item nav-link active" href="#!">Blog</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" style="margin-top: 100px;">
+        <div class="container">
+            <h1 class="text-center mt-3 mb-4">Welcome to Craig's Blog</h1>
+            <h3>Latest Blogs</h3>
+            <div class="row">
+                <div class="col-md-8">
+                    {% for blog in allblogs.all %}
+                    <div class="media blog-entry">
+                        <img class="mr-3" src="{{ blog.image.url }}" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ blog.title }}</h5>
+                            <p class="pubdate">Published: {{ blog.pub_date}}</p>
+                            <p id="A-{{ blog.id}}" class="blog-body-excerpt">{{ blog.body|truncatewords:25 }}</p>
+                            <p id="B-{{ blog.id}}" class="blog-body-full">{{ blog.body }}</p>
+                            {% if blog.body|truncatewords:25|wordcount > 25 %}
+                            <a onclick="showHide('A-{{ blog.id }}','B-{{ blog.id }}')" href="#!"><span style="font-size: 0.9em; padding: 0; margin: 0;">expand|collapse</span></a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="text-muted mt-5">
+        <div class="container text-center">
+            <p>&copy; Copyright - Craig Satchell {% now 'Y' %}</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

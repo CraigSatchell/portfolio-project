@@ -5,7 +5,7 @@ from . models import Blog
 # Create your views here.
 
 def allblogs(request):
-    allblogs = Blog.objects
+    allblogs = Blog.objects.order_by('-pub_date').all()
     return render(request, 'blog/allblogs.html', {'allblogs': allblogs})
 
 

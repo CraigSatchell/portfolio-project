@@ -3,7 +3,6 @@
 
 <head>
     {% load staticfiles %}
-    {% load tz %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -42,7 +41,7 @@
     }
 
     .blog-entry h5 {
-        color: #006bb3;
+        color: #336699;
     }
 
     .blog-entry p {
@@ -76,15 +75,6 @@
         padding: 0;
     }
 
-    .blog-entry a, .blog-entry a:link, .blog-entry a:visited {
-        text-decoration: none;
-        color: #006bb3;
-    }
-
-    .blog-entry a:hover {
-        color: #999;
-    }
-
 </style>
 
 </head>
@@ -112,13 +102,18 @@
             <h3>Latest Blogs</h3>
             <div class="row">
                 <div class="col-md-8">
-                    {% for blog in allblogs %}
+                    {% for blog in allblogs.all %}
                     <div class="media blog-entry">
-                        <!-- <img class="mr-3" src="{{ blog.image.url }}" alt="Generic placeholder image"> -->
+                        <img class="mr-3" src="{{ blog.image.url }}" alt="Generic placeholder image">
                         <div class="media-body">
-                            <h5 class="mt-0"><a href="{% url 'details' blog.id %}">{{ blog.title }}</a></h5>
-                            <p class="pubdate">Published: {{ blog.pub_date }}</p>
-                            <p id="{{ blog.id}}">{{ blog.body|truncatewords:15 }}</p>
+                            <h5 class="mt-0">{{ blog.title }}</h5>
+                            <p class="pubdate">Published: {{ blog.pub_date}}</p>
+                            <p id="A-{{ blog.id}}" class="blog-body-excerpt">{{ blog.body|truncatewords:25 }}</p>
+                            <p id="B-{{ blog.id}}" class="blog-body-full">{{ blog.body }}</p>
+                            {% if blog.body|truncatewords:25|wordcount > 25 %}
+                            <a onclick="showHide('A-{{ blog.id }}','B-{{ blog.id }}')" href="#!"><span style="font-size: 0.9em; padding: 0; margin: 0;">expand|collapse</span></a>
+                            {% endif %}
+
                         </div>
                     </div>
                     {% endfor %}

@@ -110,9 +110,7 @@
                         <div class="media-body">
                             <h5 class="mt-0">{{ blog.title }}</h5>
                             <p class="pubdate">Published: {{ blog.pub_date}}</p>
-                            <p id="B-{{ blog.id}}" class="blog-body-full">{{ blog.body }}</p>
-                            {% if blog.body %}
-                            {% endif %}
+                            <p id="{{ blog.id}}">{{ blog.body }}</p>
                         </div>
                     </div>
 
